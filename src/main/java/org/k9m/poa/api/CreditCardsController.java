@@ -15,7 +15,7 @@ public class CreditCardsController implements CreditCardsApi{
     private final CreditCardRepository creditCardRepository;
 
     @Override
-    public ResponseEntity<CreditCardDTO> getCreditCardDetail(Long id) {
+    public ResponseEntity<CreditCardDTO> getCreditCardDetail(final Long id) {
         return ResponseEntity.ok(creditCardRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Couldn't find CREDIT card with id: " + id)).toApiModel());
     }
 }

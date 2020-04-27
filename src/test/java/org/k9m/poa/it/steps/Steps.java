@@ -3,18 +3,18 @@ package org.k9m.poa.it.steps;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.extern.slf4j.Slf4j;
-import org.k9m.poa.api.model.*;
+import org.k9m.poa.api.model.AccountDTO;
+import org.k9m.poa.api.model.CreditCardDTO;
+import org.k9m.poa.api.model.DebitCardDTO;
+import org.k9m.poa.api.model.ErrorObjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.HttpClientErrorException;
-
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -34,6 +34,7 @@ public class Steps {
 
     private DebitCardDTO lastRetrievedDebitCard;
     private CreditCardDTO lastRetrievedCreditCard;
+    private AccountDTO lastRetrievedAccount;
     private HttpClientErrorException lastThrownException;
 
 
@@ -72,6 +73,15 @@ public class Steps {
         }
     }
 
+    @When("retrieving an account with id {int}")
+    public void retrievingAccountWithId(long id) {
+        try {
+            lastRetrievedAccount = testClient.getAccount(id);
+        } catch (HttpClientErrorException e) {
+           lastThrownException = e;
+        }
+    }
+
     @Then("the following debit card details should match")
     public void assertDebit(final DataTable dataTable) {
         assertNotNull("lastRetrievedDebitCard shouldn't be null", lastRetrievedDebitCard);
@@ -84,34 +94,11 @@ public class Steps {
         assertThat(lastRetrievedCreditCard, is(dataTable.<CreditCardDTO>asList(CreditCardDTO.class).get(0)));
     }
 
-
-    @DataTableType
-    public DebitCardDTO debitCard(Map<String, String> entry) {
-        return new DebitCardDTO()
-                .id(Long.parseLong(entry.get("id")))
-                .cardNumber(Integer.parseInt(entry.get("cardNumber")))
-                .sequenceNumber(Integer.parseInt(entry.get("sequenceNumber")))
-                .cardHolder(entry.get("cardHolder"))
-                .status(StatusDTO.fromValue(entry.get("status")))
-                .contactless(Boolean.valueOf(entry.get("contactless")))
-                .atmLimit(new LimitDTO()
-                        .limit(Integer.parseInt(entry.get("atm.limit")))
-                        .periodUnit(PeriodUnitDTO.fromValue(entry.get("atm.periodUnit")))
-                )
-                .posLimit(new LimitDTO()
-                        .limit(Integer.parseInt(entry.get("pos.limit")))
-                        .periodUnit(PeriodUnitDTO.fromValue(entry.get("pos.periodUnit")))
-                );
+    @Then("the following account details should match")
+    public void assertAccount(final DataTable dataTable) {
+        assertNotNull("lastRetrievedAccount shouldn't be null", lastRetrievedAccount);
+        assertThat(lastRetrievedAccount, is(dataTable.<AccountDTO>asList(AccountDTO.class).get(0)));
     }
 
-    @DataTableType
-    public CreditCardDTO creditCard(Map<String, String> entry) {
-        return new CreditCardDTO()
-                .id(Long.parseLong(entry.get("id")))
-                .cardNumber(Integer.parseInt(entry.get("cardNumber")))
-                .sequenceNumber(Integer.parseInt(entry.get("sequenceNumber")))
-                .cardHolder(entry.get("cardHolder"))
-                .status(StatusDTO.fromValue(entry.get("status")))
-                .monthlyLimit(Integer.parseInt(entry.get("monthlyLimit")));
-    }
+
 }

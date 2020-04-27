@@ -11,7 +11,6 @@ import javax.persistence.*;
 public class DebitCard {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -31,7 +30,7 @@ public class DebitCard {
     private Boolean contactless;
 
     public DebitCardDTO toApiModel(){
-        DebitCardDTO debitCard = new DebitCardDTO();
+        final DebitCardDTO debitCard = new DebitCardDTO();
         BeanUtils.copyProperties(this, debitCard);
 
         debitCard

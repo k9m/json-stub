@@ -19,7 +19,7 @@ public class PowerOfAttorneysController implements PowerOfAttorneysApi{
     }
 
     @Override
-    public ResponseEntity<PowerOfAttorneyDTO> getPowerOfAttorneyDetail(String id) {
+    public ResponseEntity<PowerOfAttorneyDTO> getPowerOfAttorneyDetail(final String id) {
         return null;
     }
 }

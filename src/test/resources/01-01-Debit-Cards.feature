@@ -1,4 +1,4 @@
-Feature: System starts
+Feature: Debit Cards
 
   Background:
     Given the system has started up

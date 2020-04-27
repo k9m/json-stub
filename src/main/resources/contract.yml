@@ -9,6 +9,26 @@ servers:
   - url: http://localhost:8080
 
 paths:
+  /accounts/{id}:
+    get:
+      summary: Get Detail of a Bank Account
+      description: Get Detail of a given Bank Account
+      operationId: getBankAccount
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+
   /power-of-attorneys:
     get:
       summary: Get all power of attorneys
@@ -139,6 +159,25 @@ components:
           type: string
         type:
           $ref: "#/components/schemas/CardType"
+    Account:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        iban:
+          type: string
+        balance:
+          type: number
+          format: double
+        owner:
+          type: string
+        created:
+          type: string
+          format: date
+        ended:
+          type: string
+          format: date
     DebitCard:
       type: object
       properties:

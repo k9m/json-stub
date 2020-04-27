@@ -18,4 +18,10 @@ INSERT INTO debit_cards(id, status, card_number, sequence_number, card_holder, a
 INSERT INTO credit_cards(id, status, card_number, sequence_number, card_holder, monthly_limit) VALUES (1, 'ACTIVE', 5075, 1, 'Boromir', 3000)
 INSERT INTO credit_cards(id, status, card_number, sequence_number, card_holder, monthly_limit) VALUES (2, 'BLOCKED', 5099, 2, 'Faramir', 4000)
 
+-- ACCOUNTS
+INSERT INTO accounts(id, iban, balance, owner, created, ended) VALUES (1, 'NL23RABO123456789', -125.00, 'Super duper employee', '2007-10-12', null)
+INSERT INTO accounts(id, iban, balance, owner, created, ended) VALUES (2, 'NL23RABO987654321', 750, 'Super duper company', '2007-10-12', null)
+INSERT INTO accounts(id, iban, balance, owner, created, ended) VALUES (3, 'NL23RABO555555555', 6000, 'Super duper company', '2007-10-12', null)
+INSERT INTO accounts(id, iban, balance, owner, created, ended) VALUES (4, 'NL23RABO999999999', 0, 'Super duper company', '2007-10-12', '2019-09-01')
+
 

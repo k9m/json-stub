@@ -12,7 +12,6 @@ import javax.persistence.*;
 public class CreditCard {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -23,7 +22,7 @@ public class CreditCard {
     private Integer monthlyLimit;
 
     public CreditCardDTO toApiModel(){
-        CreditCardDTO creditCard = new CreditCardDTO();
+        final CreditCardDTO creditCard = new CreditCardDTO();
         BeanUtils.copyProperties(this, creditCard);
 
         creditCard.status(StatusDTO.fromValue(status));

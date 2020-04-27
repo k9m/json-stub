@@ -15,7 +15,7 @@ public class DebitCardsController implements DebitCardsApi{
     private final DebitCardRepository debitCardRepository;
 
     @Override
-    public ResponseEntity<DebitCardDTO> getDebitCardDetail(Long id) {
+    public ResponseEntity<DebitCardDTO> getDebitCardDetail(final Long id) {
         return ResponseEntity.ok(debitCardRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Couldn't find DEBIT card with id: " + id)).toApiModel());
     }
 }
