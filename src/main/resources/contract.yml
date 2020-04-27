@@ -1,0 +1,199 @@
+openapi: "3.0.2"
+info:
+  description: This is a sample server power of attorney service
+  version: 1.0.0
+  title: Power of attorney
+  license:
+    name: GNU
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /power-of-attorneys:
+    get:
+      summary: Get all power of attorneys
+      description: Provides list of power of attorneys for current user
+      operationId: getAllPowerOfAttorneys
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PowerOfAttorneyReference"
+
+  /power-of-attorneys/{id}:
+    get:
+      summary: Get Detail of Power of Attorney
+      description: Get Detail of given Power of Attorney
+      operationId: getPowerOfAttorneyDetail
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PowerOfAttorney"
+        "404":
+          description: Power of Attorney not found
+
+
+  /credit-cards/{id}:
+    get:
+      summary: Get Detail of credit card
+      description: Get Detail of given credit card
+      operationId: getCreditCardDetail
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditCard"
+        "404":
+          description: Credit card not found
+
+  /debit-cards/{id}:
+    get:
+      summary: Get Detail of debit card
+      description: Get Detail of given debit card
+      operationId: getDebitCardDetail
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DebitCard"
+        "404":
+          description: Debit card not found
+
+
+components:
+  schemas:
+
+    ErrorObject:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        message:
+          type: string
+
+    PowerOfAttorneyReference:
+      type: object
+      properties:
+        id:
+          type: string
+    PowerOfAttorney:
+      type: object
+      properties:
+        id:
+          type: string
+        grantor:
+          type: string
+        grantee:
+          type: string
+        account:
+          type: string
+        direction:
+          $ref: "#/components/schemas/Direction"
+        authorizations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Authorization"
+        cards:
+          type: array
+          items:
+            $ref: "#/components/schemas/CardReference"
+    CardReference:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          $ref: "#/components/schemas/CardType"
+    DebitCard:
+      type: object
+      properties:
+        id:
+          type: string
+        cardNumber:
+          type: integer
+        sequenceNumber:
+          type: integer
+        cardHolder:
+          type: string
+        atmLimit:
+          $ref: "#/components/schemas/Limit"
+        posLimit:
+          $ref: "#/components/schemas/Limit"
+        contactless:
+          type: boolean
+    CreditCard:
+      type: object
+      properties:
+        id:
+          type: string
+        cardNumber:
+          type: integer
+        sequenceNumber:
+          type: integer
+        cardHolder:
+          type: string
+        monhtlyLimit:
+          type: integer
+    Limit:
+      type: object
+      properties:
+        limit:
+          type: integer
+        periodUnit:
+          $ref: "#/components/schemas/PeriodUnit"
+    Authorization:
+      type: string
+      enum:
+        - DEBIT_CARD
+        - CREDIT_CARD
+        - VIEW
+        - PAYMENT
+    Direction:
+      type: string
+      enum:
+        - GIVEN
+        - RECEIVED
+    CardType:
+      type: string
+      enum:
+        - DEBIT_CARD
+        - CREDIT_CARD
+    PeriodUnit:
+      type: string
+      enum:
+        - PER_DAY
+        - PER_WEEK
+        - PER_MONTH
