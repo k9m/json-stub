@@ -1,15 +1,16 @@
 package org.k9m.poa.it.steps;
 
 import lombok.Getter;
-import org.k9m.poa.api.model.AccountDTO;
-import org.k9m.poa.api.model.CreditCardDTO;
-import org.k9m.poa.api.model.DebitCardDTO;
+import org.k9m.poa.api.model.*;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 import static io.cucumber.spring.CucumberTestContext.SCOPE_CUCUMBER_GLUE;
 
@@ -45,4 +46,11 @@ public class TestClient {
         return restTemplate.getForObject(baseUrl + "/accounts/{id}", AccountDTO.class, id);
     }
 
+    public PowerOfAttorneyDTO getPOA(Long id) {
+        return restTemplate.getForObject(baseUrl + "/power-of-attorneys/{id}", PowerOfAttorneyDTO.class, id);
+    }
+
+    public List<PowerOfAttorneyReferenceDTO> getPOAs() {
+        return restTemplate.exchange(baseUrl + "/power-of-attorneys", HttpMethod.GET, null, new ParameterizedTypeReference<List<PowerOfAttorneyReferenceDTO>>() {}).getBody();
+    }
 }

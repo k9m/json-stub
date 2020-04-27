@@ -54,7 +54,8 @@ paths:
           name: id
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       responses:
         "200":
           description: successful operation
@@ -130,12 +131,14 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
     PowerOfAttorney:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
         grantor:
           type: string
         grantee:
@@ -156,7 +159,8 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
         type:
           $ref: "#/components/schemas/CardType"
     Account:

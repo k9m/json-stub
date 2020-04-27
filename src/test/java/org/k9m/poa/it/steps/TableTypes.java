@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.k9m.poa.api.model.*;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class TableTypes {
@@ -54,6 +56,29 @@ public class TableTypes {
         } catch (Exception e) {/*NOOP*/}
 
         return accountDTO;
+    }
+
+    @DataTableType
+    public PowerOfAttorneyDTO poa(Map<String, String> entry) {
+        return new PowerOfAttorneyDTO()
+                .id(Long.parseLong(entry.get("id")))
+                .grantor(entry.get("grantor"))
+                .grantee(entry.get("grantee"))
+                .account(entry.get("account"))
+                .direction(DirectionDTO.fromValue(entry.get("direction")))
+                .authorizations(Arrays.stream(entry.get("authorizations").split(",")).map(AuthorizationDTO::fromValue).collect(Collectors.toList()));
+    }
+
+    @DataTableType
+    public PowerOfAttorneyReferenceDTO poas(Map<String, String> entry) {
+        return new PowerOfAttorneyReferenceDTO().id(Long.parseLong(entry.get("id")));
+    }
+
+    @DataTableType
+    public CardReferenceDTO poaCards(Map<String, String> entry) {
+        return new CardReferenceDTO()
+                .id(Long.parseLong(entry.get("id")))
+                .type(CardTypeDTO.fromValue(entry.get("type")));
     }
 
 }

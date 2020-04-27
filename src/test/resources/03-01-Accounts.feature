@@ -11,7 +11,7 @@ Feature: Accounts
     When retrieving an account with id 4
     Then the following account details should match
       | id | iban              | balance | owner               | created    | ended      |
-      | 4  | NL23RABO999999999 | 0.00    | Super duper company | 2007-10-12 | 2019-09-01 |
+      | 4  | NL23RABO123123123 | 0.00    | Super duper company | 2007-10-12 | 2019-09-01 |
 
 
   Scenario: Retrieving an account should display the correct details

@@ -21,7 +21,44 @@ INSERT INTO credit_cards(id, status, card_number, sequence_number, card_holder, 
 -- ACCOUNTS
 INSERT INTO accounts(id, iban, balance, owner, created, ended) VALUES (1, 'NL23RABO123456789', -125.00, 'Super duper employee', '2007-10-12', null)
 INSERT INTO accounts(id, iban, balance, owner, created, ended) VALUES (2, 'NL23RABO987654321', 750, 'Super duper company', '2007-10-12', null)
-INSERT INTO accounts(id, iban, balance, owner, created, ended) VALUES (3, 'NL23RABO555555555', 6000, 'Super duper company', '2007-10-12', null)
-INSERT INTO accounts(id, iban, balance, owner, created, ended) VALUES (4, 'NL23RABO999999999', 0, 'Super duper company', '2007-10-12', '2019-09-01')
+INSERT INTO accounts(id, iban, balance, owner, created, ended) VALUES (3, 'NL23RABO343434343', 6000, 'Super duper company', '2007-10-12', null)
+INSERT INTO accounts(id, iban, balance, owner, created, ended) VALUES (4, 'NL23RABO123123123', 0, 'Super duper company', '2007-10-12', '2019-09-01')
+
+--AUTHORIZATIONS
+INSERT INTO authorizations(id, auth_value) VALUES (1, 'DEBIT_CARD')
+INSERT INTO authorizations(id, auth_value) VALUES (2, 'CREDIT_CARD')
+INSERT INTO authorizations(id, auth_value) VALUES (3, 'VIEW')
+INSERT INTO authorizations(id, auth_value) VALUES (4, 'PAYMENT')
+
+--POA
+INSERT INTO power_of_attorney(id, grantor, grantee, account_id, direction) VALUES (1, 'Super duper company', 'Fellowship of the ring', 1, 'GIVEN')
+INSERT INTO power_of_attorney(id, grantor, grantee, account_id, direction) VALUES (2, 'Super duper company', 'Super duper employee', 2, 'GIVEN')
+INSERT INTO power_of_attorney(id, grantor, grantee, account_id, direction) VALUES (3, 'Super duper company', 'Super duper employee', 3, 'GIVEN')
+INSERT INTO power_of_attorney(id, grantor, grantee, account_id, direction) VALUES (4, 'Super duper employee', 'Super duper company', 4, 'GIVEN')
+
+--POA_AUTH
+INSERT INTO auth_poa(poa_id, auth_id) VALUES(1, 1)
+INSERT INTO auth_poa(poa_id, auth_id) VALUES(1, 3)
+INSERT INTO auth_poa(poa_id, auth_id) VALUES(1, 4)
+
+INSERT INTO auth_poa(poa_id, auth_id) VALUES(2, 1)
+INSERT INTO auth_poa(poa_id, auth_id) VALUES(2, 3)
+INSERT INTO auth_poa(poa_id, auth_id) VALUES(2, 4)
+
+INSERT INTO auth_poa(poa_id, auth_id) VALUES(3, 3)
+INSERT INTO auth_poa(poa_id, auth_id) VALUES(3, 4)
+
+INSERT INTO auth_poa(poa_id, auth_id) VALUES(4, 3)
+INSERT INTO auth_poa(poa_id, auth_id) VALUES(4, 4)
+
+--DEBIT_CARDS_POA
+INSERT INTO debit_cards_poa(poa_id, dc_id) VALUES(1, 1)
+INSERT INTO debit_cards_poa(poa_id, dc_id) VALUES(1, 2)
+INSERT INTO debit_cards_poa(poa_id, dc_id) VALUES(2, 4)
+
+--CREDIT_CARDS_POA
+INSERT INTO credit_cards_poa(poa_id, cc_id) VALUES(1, 1)
+
+
 
 
