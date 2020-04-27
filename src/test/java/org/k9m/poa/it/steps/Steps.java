@@ -33,6 +33,7 @@ public class Steps {
     private ObjectMapper objectMapper;
 
     private DebitCardDTO lastRetrievedDebitCard;
+    private CreditCardDTO lastRetrievedCreditCard;
     private HttpClientErrorException lastThrownException;
 
 
@@ -62,10 +63,25 @@ public class Steps {
         }
     }
 
-    @Then("the following details should match")
-    public void theFollowingDetailsShouldMatch(final DataTable dataTable) {
+    @When("retrieving a credit card account with id {int}")
+    public void retrievingACreditCardAccountWithId(long id) {
+        try {
+            lastRetrievedCreditCard = testClient.getCreditCard(id);
+        } catch (HttpClientErrorException e) {
+           lastThrownException = e;
+        }
+    }
+
+    @Then("the following debit card details should match")
+    public void assertDebit(final DataTable dataTable) {
         assertNotNull("lastRetrievedDebitCard shouldn't be null", lastRetrievedDebitCard);
         assertThat(lastRetrievedDebitCard, is(dataTable.<DebitCardDTO>asList(DebitCardDTO.class).get(0)));
+    }
+
+    @Then("the following credit card details should match")
+    public void assertCredit(final DataTable dataTable) {
+        assertNotNull("lastRetrievedCreditCard shouldn't be null", lastRetrievedCreditCard);
+        assertThat(lastRetrievedCreditCard, is(dataTable.<CreditCardDTO>asList(CreditCardDTO.class).get(0)));
     }
 
 
@@ -86,5 +102,16 @@ public class Steps {
                         .limit(Integer.parseInt(entry.get("pos.limit")))
                         .periodUnit(PeriodUnitDTO.fromValue(entry.get("pos.periodUnit")))
                 );
+    }
+
+    @DataTableType
+    public CreditCardDTO creditCard(Map<String, String> entry) {
+        return new CreditCardDTO()
+                .id(Long.parseLong(entry.get("id")))
+                .cardNumber(Integer.parseInt(entry.get("cardNumber")))
+                .sequenceNumber(Integer.parseInt(entry.get("sequenceNumber")))
+                .cardHolder(entry.get("cardHolder"))
+                .status(StatusDTO.fromValue(entry.get("status")))
+                .monthlyLimit(Integer.parseInt(entry.get("monthlyLimit")));
     }
 }

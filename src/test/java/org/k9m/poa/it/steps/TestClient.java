@@ -1,6 +1,7 @@
 package org.k9m.poa.it.steps;
 
 import lombok.Getter;
+import org.k9m.poa.api.model.CreditCardDTO;
 import org.k9m.poa.api.model.DebitCardDTO;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Scope;
@@ -33,6 +34,10 @@ public class TestClient {
 
     public DebitCardDTO getDebitCard(Long id){
         return restTemplate.getForObject(baseUrl + "/debit-cards/{id}", DebitCardDTO.class, id);
+    }
+
+    public CreditCardDTO getCreditCard(Long id){
+        return restTemplate.getForObject(baseUrl + "/credit-cards/{id}", CreditCardDTO.class, id);
     }
 
 }

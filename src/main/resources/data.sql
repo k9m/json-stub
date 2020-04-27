@@ -14,4 +14,8 @@ INSERT INTO debit_cards(id, status, card_number, sequence_number, card_holder, a
 INSERT INTO debit_cards(id, status, card_number, sequence_number, card_holder, atm_limit_id, pos_limit_id, contactless) VALUES (3, 'ACTIVE', 1111, 32, 'Super duper employee', 5, 6, false)
 INSERT INTO debit_cards(id, status, card_number, sequence_number, card_holder, atm_limit_id, pos_limit_id, contactless) VALUES (4, 'BLOCKED', 5678, 5, 'Darth Vader', 7, 8, true)
 
+-- CREDIT cards
+INSERT INTO credit_cards(id, status, card_number, sequence_number, card_holder, monthly_limit) VALUES (1, 'ACTIVE', 5075, 1, 'Boromir', 3000)
+INSERT INTO credit_cards(id, status, card_number, sequence_number, card_holder, monthly_limit) VALUES (2, 'BLOCKED', 5099, 2, 'Faramir', 4000)
+
 
