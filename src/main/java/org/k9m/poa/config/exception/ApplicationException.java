@@ -1,7 +1,7 @@
 package org.k9m.poa.config.exception;
 
 import lombok.Getter;
-import org.k9m.poa.api.model.ErrorObject;
+import org.k9m.poa.api.model.ErrorObjectDTO;
 import org.springframework.http.HttpStatus;
 
 public class ApplicationException extends RuntimeException {
@@ -14,8 +14,8 @@ public class ApplicationException extends RuntimeException {
         this.statusCode = statusCode;
     }
 
-    public ErrorObject toError(){
-        return new ErrorObject()
+    public ErrorObjectDTO toError(){
+        return new ErrorObjectDTO()
                 .statusCode(statusCode.value())
                 .message(getMessage());
     }

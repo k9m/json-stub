@@ -1,6 +1,6 @@
 package org.k9m.poa.config.exception;
 
-import org.k9m.poa.api.model.ErrorObject;
+import org.k9m.poa.api.model.ErrorObjectDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         }
 
         return new ResponseEntity<>(
-                new ErrorObject()
+                new ErrorObjectDTO()
                         .statusCode(status.value())
                         .message(ex.getMessage()),
                 headers,
