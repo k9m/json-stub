@@ -12,7 +12,10 @@ Feature: Debit Cards
     Then the following debit card details should match
       | id | cardNumber | sequenceNumber | cardHolder | status | contactless | atm.limit | atm.periodUnit | pos.limit | pos.periodUnit |
       | 2  | 6527       | 1              | Aragorn    | ACTIVE | true        | 100       | PER_DAY        | 10000     | PER_MONTH      |
-
+    When retrieving a debit card account with id 3
+    Then the following debit card details should match
+      | id | cardNumber | sequenceNumber | cardHolder           | status  | contactless | atm.limit | atm.periodUnit | pos.limit | pos.periodUnit |
+      | 3  | 1111       | 32             | Super duper employee | BLOCKED | false       | 10000     | PER_DAY        | 10000     | PER_MONTH      |
 
   Scenario: Retrieving a debit card account should display the correct details
     When retrieving a debit card account with id 99999
