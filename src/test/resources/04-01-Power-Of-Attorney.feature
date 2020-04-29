@@ -22,11 +22,6 @@ Feature: Power of Attorney
       | id | type       |
       | 4  | DEBIT_CARD |
 
-
-  Scenario: Retrieving a power of attorney should display the correct details
-    When retrieving a power of attorney with id 99999
-    Then an error should be returned with message containing: Couldn't find POA with id: 99999 and status code: 404
-
   Scenario: Retrieving all power of attorneys
     When retrieving all power of attorneys
     Then the following power of attorneys should be returned
@@ -35,3 +30,12 @@ Feature: Power of Attorney
       | 2  |
       | 3  |
       | 4  |
+
+
+  Scenario: Retrieving a power of attorney should display the correct details
+    When retrieving a power of attorney with id 99999
+    Then an error should be returned with message containing: Couldn't find POA with id: 99999 and status code: 404
+
+  Scenario: Retrieving a power of attorney with a closed account
+    When retrieving a power of attorney with id 4
+    Then an error should be returned with message containing: Account has been closed for POA with id: 4 and status code: 400

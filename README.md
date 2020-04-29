@@ -7,7 +7,9 @@
   - ~~Build a REST API presenting aggregated information from different services~~
   - Only show data that a user is actually authorized for
   - ~~Handle any server errors you might run into gracefully~~
-  - Don't return inactive products or accounts
+  - ~~Don't return inactive products or accounts~~
+     - Removing out BLOCKED CREDIT/DEBIT card
+     - My understanding is POA's should not be shown for closed accounts at all
   - (Optional) Expose the API over HTTPS
   - Perform whatever validation seems necessary
  

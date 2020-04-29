@@ -1,7 +1,7 @@
 package org.k9m.poa.service;
 
 import lombok.RequiredArgsConstructor;
-import org.k9m.poa.api.exception.ResourceNotFoundException;
+import org.k9m.poa.api.exception.BusinessException;
 import org.k9m.poa.api.model.PowerOfAttorneyDTO;
 import org.k9m.poa.api.model.PowerOfAttorneyReferenceDTO;
 import org.k9m.poa.persistence.model.PowerOfAttorney;
@@ -23,15 +23,16 @@ public class PowerOfAttorneyService {
     }
 
     public PowerOfAttorneyDTO getPOADetail(final Long id) {
-        PowerOfAttorney poa = powerOfAttorneyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Couldn't find POA with id: " + id));
+        PowerOfAttorney poa = powerOfAttorneyRepository.findByIdAndAccountEndedNull(id);
+        if (poa == null) {
+            throw new BusinessException("Account has been closed for POA with id: " + id);
+        }
 
         poa.setCreditCards(poa.getCreditCards().stream().filter(cc -> "ACTIVE".equalsIgnoreCase(cc.getStatus())).collect(Collectors.toList()));
         poa.setDebitCards(poa.getDebitCards().stream().filter(dc -> "ACTIVE".equalsIgnoreCase(dc.getStatus())).collect(Collectors.toList()));
 
         return poa.toApiModel();
     }
-
-
 
 
 }
